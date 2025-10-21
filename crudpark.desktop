@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=CrudPark Estacionamiento
+Comment=Sistema de gestión de estacionamiento
+Exec=java -jar "/home/juancamilo/Vídeos/20 octubre/crudPark/target/crudpark-1.0.0.jar"
+Icon=applications-office
+Categories=Office;
+Terminal=false
+StartupNotify=true
+Path=/home/juancamilo/Vídeos/20 octubre/crudPark
