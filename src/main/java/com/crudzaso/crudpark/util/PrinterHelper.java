@@ -9,8 +9,7 @@ import java.awt.image.BufferedImage;
 import java.awt.print.*;
 
 /**
- * Helper class to print tickets on physical printers
- * Uses javax.print (Java Print API standard)
+ * Helper class to print tickets on physical printers Uses javax.print (Java Print API standard)
  * Compatible with any printer, optimized for Xprinter XP-58IIT
  */
 public class PrinterHelper {
@@ -21,8 +20,7 @@ public class PrinterHelper {
     }
 
     /**
-     * Prints ticket using system print dialog
-     * Compatible with any printer
+     * Prints ticket using system print dialog Compatible with any printer
      */
     public boolean printWithDialog(Ticket ticket, Operator operator) {
         PrinterJob job = PrinterJob.getPrinterJob();
@@ -61,9 +59,8 @@ public class PrinterHelper {
     }
 
     /**
-     * Prints on Xprinter XP-58IIT automatically
-     * Searches for the printer by name
-     * Falls back to other printers if Xprinter not found
+     * Prints on Xprinter XP-58IIT automatically Searches for the printer by name Falls back to
+     * other printers if Xprinter not found
      */
     public boolean printOnXprinter(Ticket ticket, Operator operator) {
         // Possible names for Xprinter in the system
@@ -102,14 +99,15 @@ public class PrinterHelper {
             Paper paper = new Paper();
 
             // Dimensions for 58mm thermal paper (in points: 1 inch = 72 points)
-            double paperWidth = 58 * 72 / 25.4;  // 58mm to points
+            double paperWidth = 58 * 72 / 25.4; // 58mm to points
             double paperHeight = 300 * 72 / 25.4; // 300mm height for longer tickets
 
             // Minimum margin for thermal printers
             double margin = 5; // 5 points margin
 
             paper.setSize(paperWidth, paperHeight);
-            paper.setImageableArea(margin, margin, paperWidth - 2 * margin, paperHeight - 2 * margin);
+            paper.setImageableArea(margin, margin, paperWidth - 2 * margin,
+                    paperHeight - 2 * margin);
             pageFormat.setPaper(paper);
 
             job.setPrintable(new TicketPrintable58mm(ticket, operator), pageFormat);
@@ -157,8 +155,7 @@ public class PrinterHelper {
     }
 
     /**
-     * Inner class that defines how the ticket is printed
-     * Standard format for any printer
+     * Inner class that defines how the ticket is printed Standard format for any printer
      */
     private class TicketPrintable implements Printable {
         private final Ticket ticket;
@@ -171,11 +168,13 @@ public class PrinterHelper {
 
             // Generate QR to include in print
             long timestamp = ticket.getEntryDate().getTime();
-            this.qrImage = qrGenerator.generateQR(ticket.getId(), ticket.getLicensePlate(), timestamp);
+            this.qrImage =
+                    qrGenerator.generateQR(ticket.getId(), ticket.getLicensePlate(), timestamp);
         }
 
         @Override
-        public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
+        public int print(Graphics graphics, PageFormat pageFormat, int pageIndex)
+                throws PrinterException {
             if (pageIndex > 0) {
                 return NO_SUCH_PAGE;
             }
@@ -313,11 +312,13 @@ public class PrinterHelper {
 
             // Generate QR optimized for 58mm (smaller: 80x80px)
             long timestamp = ticket.getEntryDate().getTime();
-            this.qrImage = qrGenerator.generateQR(ticket.getId(), ticket.getLicensePlate(), timestamp);
+            this.qrImage =
+                    qrGenerator.generateQR(ticket.getId(), ticket.getLicensePlate(), timestamp);
         }
 
         @Override
-        public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
+        public int print(Graphics graphics, PageFormat pageFormat, int pageIndex)
+                throws PrinterException {
             if (pageIndex > 0) {
                 return NO_SUCH_PAGE;
             }
@@ -360,7 +361,7 @@ public class PrinterHelper {
             g2d.setFont(subtitleFont);
             g2d.drawString("TICKET #:", margin, y);
             g2d.setFont(normalFont);
-            g2d.drawString(String.format("%06d", ticket.getId()), margin + 35, y);
+            g2d.drawString(String.format("%06d", ticket.getId()), margin + 45, y);
             y += lineHeight;
 
             g2d.setFont(subtitleFont);
@@ -392,7 +393,7 @@ public class PrinterHelper {
             g2d.setFont(subtitleFont);
             g2d.drawString("OPERADOR:", margin, y);
             g2d.setFont(normalFont);
-            g2d.drawString(operator.getName(), margin + 40, y);
+            g2d.drawString(operator.getName(), margin + 60, y);
             y += lineHeight + 5;
 
             // ===== QR CODE =====
