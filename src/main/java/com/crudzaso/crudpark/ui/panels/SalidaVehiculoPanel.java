@@ -317,15 +317,16 @@ public class SalidaVehiculoPanel extends JPanel {
         entryDateLabel.setText(DateUtils.formatForTicket(currentTicket.getEntryDate()));
         stayTimeLabel.setText(ticketService.getFormattedStayTime(currentTicket));
 
-        // Calculate amount (temporarily create exit ticket to calculate)
+        // Calculate amount immediately
         if (currentTicket.getCustomerType() == CustomerTypeEnum.SUBSCRIPTION) {
             amountLabel.setText("$0 (Mensualidad)");
             amountLabel.setForeground(new Color(39, 174, 96));
             paymentMethodCombo.setEnabled(false);
         } else {
-            // We'll calculate the amount when processing exit
-            amountLabel.setText("A calcular...");
-            amountLabel.setForeground(new Color(243, 156, 18));
+            // Calculate total amount to pay immediately
+            BigDecimal totalAmount = ticketService.calculateAmount(currentTicket);
+            amountLabel.setText("$" + totalAmount);
+            amountLabel.setForeground(new Color(39, 174, 96));
             paymentMethodCombo.setEnabled(true);
         }
 

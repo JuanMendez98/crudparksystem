@@ -185,4 +185,19 @@ public class TicketService {
         long minutes = calculateMinutesStay(ticket.getEntryDate(), exitDate);
         return DateUtils.formatStayTime((int) minutes);
     }
+
+    /**
+     * Calculates the amount to pay for a ticket
+     * @param ticket The ticket
+     * @return The amount to pay
+     */
+    public BigDecimal calculateAmount(Ticket ticket) {
+        if (ticket.getCustomerType() == CustomerTypeEnum.SUBSCRIPTION) {
+            return BigDecimal.ZERO;
+        }
+
+        Timestamp exitDate = Timestamp.valueOf(LocalDateTime.now());
+        long minutesStay = calculateMinutesStay(ticket.getEntryDate(), exitDate);
+        return rateCalculator.calculateAmount((int) minutesStay, ticket.getVehicleType());
+    }
 }
