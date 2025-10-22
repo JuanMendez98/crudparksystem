@@ -1,12 +1,11 @@
 package com.crudzaso.crudpark.service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import com.crudzaso.crudpark.config.AppConfig;
 import com.crudzaso.crudpark.dao.RateDAO;
 import com.crudzaso.crudpark.model.Rate;
 import com.crudzaso.crudpark.model.enums.VehicleTypeEnum;
-
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 /**
  * Service for calculating parking rates
@@ -35,12 +34,13 @@ public class RateCalculatorService {
             return BigDecimal.ZERO;
         }
 
-        // Calculate minutes to charge (excluding grace period)
-        int minutesToCharge = minutesStay - gracePeriod;
-
-        // Convert minutes to hours (rounding up)
-        BigDecimal hours = BigDecimal.valueOf(minutesToCharge)
-                .divide(BigDecimal.valueOf(60), 2, RoundingMode.CEILING);
+        // Calculate hours to charge (excluding grace period, rounding up to nearest hour)
+        // Example: 80 min = 1h 20min = 2 hours (because 80-30=50min, which rounds to 1 hour)
+        // But according to requirements: 80 min should charge 2 hours
+        // So we need to calculate from total time, not from time after grace period
+        double totalHours = minutesStay / 60.0;
+        int hoursToCharge = (int) Math.ceil(totalHours);
+        BigDecimal hours = BigDecimal.valueOf(hoursToCharge);
 
         // Calculate amount
         BigDecimal amount = rate.getHourlyRate().multiply(hours);
