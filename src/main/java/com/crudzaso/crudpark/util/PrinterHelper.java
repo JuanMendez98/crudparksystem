@@ -103,7 +103,7 @@ public class PrinterHelper {
 
             // Dimensions for 58mm thermal paper (in points: 1 inch = 72 points)
             double paperWidth = 58 * 72 / 25.4;  // 58mm to points
-            double paperHeight = 200 * 72 / 25.4; // 200mm height
+            double paperHeight = 300 * 72 / 25.4; // 300mm height for longer tickets
 
             // Minimum margin for thermal printers
             double margin = 5; // 5 points margin
@@ -183,11 +183,11 @@ public class PrinterHelper {
             Graphics2D g2d = (Graphics2D) graphics;
             g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
 
-            // Fonts with better design
-            Font titleFont = new Font("Monospaced", Font.BOLD, 14);
-            Font subtitleFont = new Font("Monospaced", Font.BOLD, 11);
-            Font normalFont = new Font("Monospaced", Font.PLAIN, 10);
-            Font smallFont = new Font("Monospaced", Font.PLAIN, 9);
+            // Fonts with enhanced bold design for better visibility
+            Font titleFont = new Font("Monospaced", Font.BOLD, 16);
+            Font subtitleFont = new Font("Monospaced", Font.BOLD, 12);
+            Font normalFont = new Font("Monospaced", Font.BOLD, 11);
+            Font smallFont = new Font("Monospaced", Font.BOLD, 9);
 
             int y = 25;
             int lineHeight = 16;
@@ -329,11 +329,11 @@ public class PrinterHelper {
             int margin = 5;
             int usableWidth = maxWidth - 2 * margin;
 
-            // Fonts optimized for 58mm
-            Font titleFont = new Font("Monospaced", Font.BOLD, 10);
-            Font subtitleFont = new Font("Monospaced", Font.BOLD, 8);
-            Font normalFont = new Font("Monospaced", Font.PLAIN, 8);
-            Font smallFont = new Font("Monospaced", Font.PLAIN, 7);
+            // Fonts optimized for 58mm with bold text
+            Font titleFont = new Font("Monospaced", Font.BOLD, 12);
+            Font subtitleFont = new Font("Monospaced", Font.BOLD, 10);
+            Font normalFont = new Font("Monospaced", Font.BOLD, 9);
+            Font smallFont = new Font("Monospaced", Font.BOLD, 8);
 
             int y = 15;
             int lineHeight = 12;
